@@ -8,15 +8,15 @@ typedef struct snode {
 	struct snode* next;
 } snode, * symset;
 
-symset phi;
+extern symset phi;
 
-symset declbegsys;
+extern symset declbegsys;
 
-symset statbegsys;
+extern symset statbegsys;
 
-symset facbegsys;
+extern symset facbegsys;
 
-symset relset;
+extern symset relset;
 
 // 基于一系列整型变量建立一个优先链表，元素从小到大排列
 symset createset(int data, .../* SYM_NULL */);

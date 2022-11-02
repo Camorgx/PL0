@@ -19,12 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="error.c" />
+    <ClCompile Include="execute.c" />
+    <ClCompile Include="lex.c" />
+    <ClCompile Include="main.c" />
     <ClCompile Include="PL0.c" />
     <ClCompile Include="set.c" />
+    <ClCompile Include="table.c" />
+    <ClCompile Include="yacc.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="error.h" />
+    <ClInclude Include="execute.h" />
+    <ClInclude Include="lex.h" />
     <ClInclude Include="PL0.h" />
     <ClInclude Include="set.h" />
+    <ClInclude Include="table.h" />
+    <ClInclude Include="yacc.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="example.txt" />
@@ -113,7 +124,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
@@ -126,12 +137,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

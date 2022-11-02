@@ -1,7 +1,16 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include <stdarg.h>
 #include "set.h"
+
+symset phi;
+
+symset declbegsys;
+
+symset statbegsys;
+
+symset facbegsys;
+
+symset relset;
 
 symset uniteset(symset s1, symset s2) {
 	symset s;
