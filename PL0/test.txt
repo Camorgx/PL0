@@ -1,0 +1,16 @@
+var i;
+
+procedure p;
+var j;
+procedure q;
+begin
+	j := i + 1;
+end;
+begin
+	i := 1;
+	call q;
+end;
+
+begin
+	call p;
+end.

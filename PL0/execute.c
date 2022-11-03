@@ -35,9 +35,13 @@ void interpret(void) {
 				switch (i.a) // operator
 				{
 					case OPR_RET:
+						for (int i = 0; i < 15; ++i)
+							printf("stack[%d] = %d\n", i, stack[i]);
+						printf("PRE-RET: top = %d, pc = %d, b = %d\n", top, pc, b);
 						top = b - 1;
 						pc = stack[top + 3];
 						b = stack[top + 2];
+						printf("RET: top = %d, pc = %d, b = %d\n", top, pc, b);
 						break;
 					case OPR_NEG:
 						stack[top] = -stack[top];
