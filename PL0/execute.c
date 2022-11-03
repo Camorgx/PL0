@@ -5,8 +5,13 @@
 int base(int stack[], int currentLevel, int levelDiff) {
 	int b = currentLevel;
 
-	while (levelDiff--)
+	puts("");
+	while (levelDiff--) {
+		printf("b = %d, stack[b] = %d\n", b, stack[b]);
 		b = stack[b];
+
+	}
+		
 	return b;
 } // base
 
