@@ -41,7 +41,9 @@
     <Text Include="example.txt" />
     <Text Include="example2.txt" />
     <Text Include="example3.txt" />
+    <Text Include="hbin.txt" />
     <Text Include="test.txt" />
+    <Text Include="test1.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -35,8 +35,6 @@ void interpret(void) {
 				switch (i.a) // operator
 				{
 					case OPR_RET:
-						for (int i = 0; i < 15; ++i)
-							printf("stack[%d] = %d\n", i, stack[i]);
 						printf("PRE-RET: top = %d, pc = %d, b = %d\n", top, pc, b);
 						top = b - 1;
 						pc = stack[top + 3];
@@ -106,9 +104,12 @@ void interpret(void) {
 				break;
 			case CAL:
 				stack[top + 1] = base(stack, b, i.l);
+				printf("stack[top + 1] = %d\n", stack[top + 1]);
 				// generate new block mark
 				stack[top + 2] = b;
+				printf("stack[top + 2] = %d\n", stack[top + 2]);
 				stack[top + 3] = pc;
+				printf("stack[top + 3] = %d\n", stack[top + 3]);
 				b = top + 1;
 				pc = i.a;
 				break;
