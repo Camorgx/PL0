@@ -5,12 +5,8 @@
 int base(int stack[], int currentLevel, int levelDiff) {
 	int b = currentLevel;
 
-	puts("");
-	while (levelDiff--) {
-		printf("b = %d, stack[b] = %d\n", b, stack[b]);
+	while (levelDiff--)
 		b = stack[b];
-
-	}
 		
 	return b;
 } // base
@@ -40,11 +36,9 @@ void interpret(void) {
 				switch (i.a) // operator
 				{
 					case OPR_RET:
-						printf("PRE-RET: top = %d, pc = %d, b = %d\n", top, pc, b);
 						top = b - 1;
 						pc = stack[top + 3];
 						b = stack[top + 2];
-						printf("RET: top = %d, pc = %d, b = %d\n", top, pc, b);
 						break;
 					case OPR_NEG:
 						stack[top] = -stack[top];
@@ -109,12 +103,9 @@ void interpret(void) {
 				break;
 			case CAL:
 				stack[top + 1] = base(stack, b, i.l);
-				printf("stack[top + 1] = %d\n", stack[top + 1]);
 				// generate new block mark
 				stack[top + 2] = b;
-				printf("stack[top + 2] = %d\n", stack[top + 2]);
 				stack[top + 3] = pc;
-				printf("stack[top + 3] = %d\n", stack[top + 3]);
 				b = top + 1;
 				pc = i.a;
 				break;
