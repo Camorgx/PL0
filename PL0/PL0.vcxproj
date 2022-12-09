@@ -38,7 +38,8 @@
     <ClInclude Include="yacc.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="example.txt" />
+    <Text Include="array.txt" />
+    <Text Include="print.txt" />
     <Text Include="example2.txt" />
     <Text Include="example3.txt" />
     <Text Include="test.txt" />

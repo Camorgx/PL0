@@ -26,4 +26,8 @@ extern void gen(int x, int y, int z);
 
 extern void listcode(int from, int to);
 
+extern void dim_position(symset fsys, int i, int dimension);
+
+extern void dim_declaration(int dimension);
+
 #endif // !YACC_H

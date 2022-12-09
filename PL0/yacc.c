@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 char* mnemonic[MAXINS] = {
-	"LIT", "OPR", "LOD", "STO", "CAL", "INT", "JMP", "JPC", "PRT"
+	"LIT", "OPR", "LOD", "STO", "CAL", "INT", "JMP", "JPC", "PRT", "LODA", "LEA", "STOA"
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -150,11 +150,66 @@ void constdeclaration(void) {
   // There must be an identifier to follow 'const', 'var', or 'procedure'.
 } // constdeclaration
 
+void dim_declaration(int dimension) {
+	if (dimension > MAX_ARRAY_DIM) {
+		error(26); // NEW ERROR
+	}
+	getsym();
+	if (sym == SYM_IDENTIFIER) {
+		int i;
+		if ((i = position(id)) == 0) {
+			error(11); // Undeclared identifier.
+		}
+		else {
+			switch (table[i].kind) {
+				case ID_CONSTANT:
+					table[tx].dimension[dimension] = table[i].value;
+					break;
+				case ID_VARIABLE:
+					error(26); // NEW ERROR
+					break;
+				case ID_PROCEDURE:
+					error(26); // NEW ERROR
+					break;
+			} // switch
+		}
+	}
+	else if (sym == SYM_NUMBER) {
+		if (num >= MAX_ARRAY_DIM_LEN) error(26); // NEW ERROR
+		else {
+			table[tx].dimension[dimension] = num;
+		}
+	}
+	else error(26); // NEW ERROR
+
+	getsym();
+	if (sym == SYM_RBRACK) {
+		getsym();
+		if (sym == SYM_LBRACK)
+			dim_declaration(dimension + 1);
+		else if (sym == SYM_COMMA || sym == SYM_SEMICOLON) {
+			table[tx].dimension[dimension + 1] = 0;
+			int array_size = 1;
+			for (int i = 0; table[tx].dimension[i]; ++i)
+				array_size *= table[tx].dimension[i];
+			dx += array_size;
+		}
+		else error(26); // NEW ERROR
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 void vardeclaration(void) {
 	if (sym == SYM_IDENTIFIER) {
-		enter(ID_VARIABLE);
 		getsym();
+		if (sym == SYM_COMMA || sym == SYM_SEMICOLON) {
+			enter(ID_VARIABLE);
+		}
+		else if (sym == SYM_LBRACK) {
+			enter(ID_ARRAY);
+			dim_declaration(0);
+		}
+		else error(26); // NEW ERROR
 	}
 	else {
 		error(4); // There must be an identifier to follow 'const', 'var', or 'procedure'.
@@ -171,21 +226,45 @@ void statement(symset fsys) {
 		if (!(i = position(id))) {
 			error(11); // Undeclared identifier.
 		}
-		else if (table[i].kind != ID_VARIABLE) {
-			error(12); // Illegal assignment.
-			i = 0;
-		}
-		getsym();
-		if (sym == SYM_BECOMES) {
+		else if (table[i].kind == ID_VARIABLE) {
 			getsym();
+			if (sym == SYM_BECOMES) {
+				getsym();
+			}
+			else {
+				error(13); // ':=' expected.
+			}
+			expression(fsys);
+			mk = (mask*)&table[i];
+			if (i) {
+				gen(STO, level - mk->level, mk->address);
+			}
+		}
+		else if (table[i].kind == ID_ARRAY) {
+			getsym();
+			if (sym == SYM_LBRACK) {
+				mk = (mask*)&table[i];
+				gen(LIT, 0, 0);
+				dim_position(fsys, i, 0);
+				gen(LEA, level - mk->level, mk->address);
+				gen(OPR, 0, OPR_ADD);
+				
+				if (sym == SYM_BECOMES) {
+					getsym();
+				}
+				else {
+					error(13); // ':=' expected.
+				}
+				expression(fsys);
+				if (i) {
+					gen(STOA, 0, 0);
+				}
+			}
+			else error(26); // NEW ERROR
 		}
 		else {
-			error(13); // ':=' expected.
-		}
-		expression(fsys);
-		mk = (mask*)&table[i];
-		if (i) {
-			gen(STO, level - mk->level, mk->address);
+			error(12); // Illegal assignment.
+			i = 0;
 		}
 	}
 	else if (sym == SYM_CALL) { // procedure call
@@ -387,6 +466,26 @@ void term(symset fsys) {
 	destroyset(set);
 } // term
 
+void dim_position(symset fsys, int i, int dimension) {
+	if (table[i].dimension[dimension] == 0)
+		error(26); // NEW ERROR
+	getsym();
+	symset set = uniteset(fsys, createset(SYM_RBRACK, SYM_NULL));
+	expression(set);
+	destroyset(set);
+	if (sym == SYM_RBRACK) {
+		gen(OPR, 0, OPR_ADD);
+		if (table[i].dimension[dimension + 1] == 0)
+			gen(LIT, 0, 1);
+		else gen(LIT, 0, table[i].dimension[dimension + 1]);
+		gen(OPR, 0, OPR_MUL);
+		
+		getsym();
+		if (sym == SYM_LBRACK)
+			dim_position(fsys, i, dimension + 1);
+	}
+}
+
 //////////////////////////////////////////////////////////////////////
 void factor(symset fsys) {
 	void expression(symset fsys);
@@ -405,17 +504,31 @@ void factor(symset fsys) {
 					mask* mk;
 					case ID_CONSTANT:
 						gen(LIT, 0, table[i].value);
+						getsym();
 						break;
 					case ID_VARIABLE:
 						mk = (mask*)&table[i];
 						gen(LOD, level - mk->level, mk->address);
+						getsym();
+						break;
+					case ID_ARRAY:
+						getsym();
+						if (sym == SYM_LBRACK) {
+							mk = (mask*)&table[i];
+							gen(LIT, 0, 0);
+							dim_position(fsys, i, 0);
+							gen(LEA, level - mk->level, mk->address);
+							gen(OPR, 0, OPR_ADD);
+							gen(LODA, 0, 0);
+						}
+						else error(26); // NEW ERROR
 						break;
 					case ID_PROCEDURE:
 						error(21); // Procedure identifier can not be in an expression.
+						getsym();
 						break;
 				} // switch
 			}
-			getsym();
 		}
 		else if (sym == SYM_NUMBER) {
 			if (num > MAXADDRESS) {

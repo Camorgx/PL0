@@ -96,6 +96,12 @@ void interpret(void) {
 			case LOD:
 				stack[++top] = stack[base(stack, b, i.l) + i.a];
 				break;
+			case LEA: // NEW
+				stack[++top] = base(stack, b, i.l) + i.a;
+				break;
+			case LODA: // NEW
+				stack[top] = stack[stack[top]];
+				break;
 			case PRT: // NEW
 				if (i.l == 255) putchar('\n');
 				else printf("%d ", stack[top--]);
@@ -103,6 +109,10 @@ void interpret(void) {
 			case STO:
 				stack[base(stack, b, i.l) + i.a] = stack[top];
 				top--;
+				break;
+			case STOA:
+				stack[stack[top - 1]] = stack[top];
+				top -= 2;
 				break;
 			case CAL:
 				stack[top + 1] = base(stack, b, i.l);

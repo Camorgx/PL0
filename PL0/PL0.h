@@ -17,7 +17,10 @@
 
 #define STACKSIZE  1000   // maximum storage
 
-#define MAXINS   9
+#define MAXINS   12 // 最大指令数
+
+#define MAX_ARRAY_DIM_LEN 32 // 数组每一维的最大长度
+#define MAX_ARRAY_DIM 8 // 数组的最大维数
 
 enum symtype {
 	SYM_NULL, // 空
@@ -61,7 +64,10 @@ enum symtype {
 };
 
 enum idtype {
-	ID_CONSTANT, ID_VARIABLE, ID_PROCEDURE
+	ID_CONSTANT, 
+	ID_VARIABLE, 
+	ID_PROCEDURE,
+	ID_ARRAY
 };
 
 enum opcode {
@@ -73,7 +79,10 @@ enum opcode {
 	INT, // 在数据栈中分配存贮空间
 	JMP, // 跳转指令
 	JPC, // 条件跳转
-	PRT // 输出
+	PRT, // 输出
+	LODA, // 间接读
+	LEA, // 向栈中压入变量的绝对地址
+	STOA, // 间接写
 };
 
 enum oprcode {
@@ -102,6 +111,7 @@ typedef struct {
 	char name[MAXIDLEN + 1];
 	int  kind;
 	int  value;
+	int  dimension[8];
 } comtab;
 
 typedef struct {
@@ -109,6 +119,7 @@ typedef struct {
 	int   kind;
 	short level;
 	short address;
+	int   dimension[8];
 } mask;
 
 //////////////////////////////////////////////////////////////////////

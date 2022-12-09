@@ -29,6 +29,11 @@ void enter(int kind) {
 			mk = (mask*)&table[tx];
 			mk->level = level;
 			break;
+		case ID_ARRAY:
+			mk = (mask*)&table[tx];
+			mk->level = level;
+			mk->address = dx;
+			break;
 	} // switch
 } // enter
 
