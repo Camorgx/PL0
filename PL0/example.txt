@@ -2,4 +2,8 @@ var i,j;
 begin
   i := -1;
   j := i + 1;
+  print(i);
+  print();
+  print(i, j);
+  print(i + j);
 end.

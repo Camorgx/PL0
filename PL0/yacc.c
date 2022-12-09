@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 char* mnemonic[MAXINS] = {
-	"LIT", "OPR", "LOD", "STO", "CAL", "INT", "JMP", "JPC"
+	"LIT", "OPR", "LOD", "STO", "CAL", "INT", "JMP", "JPC", "PRT"
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -269,6 +269,32 @@ void statement(symset fsys) {
 		gen(JMP, 0, cx1);
 		code[cx2].a = cx;
 	}
+	else if (sym == SYM_PRINT) {
+		getsym();
+		if (sym == SYM_LPAREN) {
+			getsym();
+			if (sym == SYM_RPAREN) {
+				gen(PRT, 255, 0);
+			}
+			else {
+				set1 = createset(SYM_RPAREN, SYM_COMMA, SYM_NULL);
+				set = uniteset(set1, fsys);
+				expression(set);
+				gen(PRT, 0, 0);
+				while (sym == SYM_COMMA) {
+					getsym();
+					expression(set);
+					gen(PRT, 0, 0);
+				}
+				destroyset(set1);
+				destroyset(set);
+				if (sym == SYM_RPAREN) gen(PRT, 255, 0);
+				else error(26); // NEW ERROR
+			}
+			getsym();
+		}
+		else error(26); // NEW ERROR
+	}
 	test(fsys, phi, 19);
 } // statement
 
@@ -280,7 +306,7 @@ void condition(symset fsys) {
 	if (sym == SYM_ODD) {
 		getsym();
 		expression(fsys);
-		gen(OPR, 0, 6);
+		gen(OPR, 0, SYM_ODD);
 	}
 	else {
 		set = uniteset(relset, fsys);

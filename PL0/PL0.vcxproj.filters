@@ -50,9 +50,6 @@
     <ClInclude Include="lex.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="yacc.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="error.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -60,6 +57,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="table.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="yacc.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

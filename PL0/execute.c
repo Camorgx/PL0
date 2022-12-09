@@ -5,13 +5,9 @@
 int base(int stack[], int currentLevel, int levelDiff) {
 	int b = currentLevel;
 
-	puts("");
 	while (levelDiff--) {
-		printf("b = %d, stack[b] = %d\n", b, stack[b]);
 		b = stack[b];
-
 	}
-		
 	return b;
 } // base
 
@@ -99,6 +95,10 @@ void interpret(void) {
 				break;
 			case LOD:
 				stack[++top] = stack[base(stack, b, i.l) + i.a];
+				break;
+			case PRT: // NEW
+				if (i.l == 255) putchar('\n');
+				else printf("%d ", stack[top--]);
 				break;
 			case STO:
 				stack[base(stack, b, i.l) + i.a] = stack[top];

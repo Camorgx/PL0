@@ -30,7 +30,7 @@ char* err_msg[] = {
 	/* 23 */    "The symbol can not be followed by a factor.",
 	/* 24 */    "The symbol can not be as the beginning of an expression.",
 	/* 25 */    "The number is too great.",
-	/* 26 */    "",
+	/* 26 */    "NEW ERROR",
 	/* 27 */    "",
 	/* 28 */    "",
 	/* 29 */    "",
