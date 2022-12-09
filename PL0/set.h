@@ -27,7 +27,7 @@ void destroyset(symset s);
 // 合并两个优先链表，元素从小到大排列
 symset uniteset(symset s1, symset s2);
 
-// 向链表中插入元素
+// 检查链表中有无给定元素
 int inset(int elem, symset s);
 
 #endif

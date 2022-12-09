@@ -8,24 +8,31 @@
 
 char line[80];
 
+// ¹Ø¼ü×Ö
 char* word[NRW + 1] = {
 	"", /* place holder */
 	"begin", "call", "const", "do", "end","if",
-	"odd", "procedure", "then", "var", "while"
+	"odd", "procedure", "then", "var", "while",
+	"for", "print", "else", "setjmp", "longjmp" // NEW
 };
 
+// ¹Ø¼ü×Ö
 int wsym[NRW + 1] = {
 	SYM_NULL, SYM_BEGIN, SYM_CALL, SYM_CONST, SYM_DO, SYM_END,
-	SYM_IF, SYM_ODD, SYM_PROCEDURE, SYM_THEN, SYM_VAR, SYM_WHILE
+	SYM_IF, SYM_ODD, SYM_PROCEDURE, SYM_THEN, SYM_VAR, SYM_WHILE,
+	SYM_FOR, SYM_PRINT, SYM_ELSE, SYM_SETJMP, SYM_LONGJMP // NEW
 };
 
+// ²Ù×÷·û
 int ssym[NSYM + 1] = {
 	SYM_NULL, SYM_PLUS, SYM_MINUS, SYM_TIMES, SYM_SLASH,
-	SYM_LPAREN, SYM_RPAREN, SYM_EQU, SYM_COMMA, SYM_PERIOD, SYM_SEMICOLON
+	SYM_LPAREN, SYM_RPAREN, SYM_EQU, SYM_COMMA, SYM_PERIOD, SYM_SEMICOLON,
+	SYM_LBRACK, SYM_RBRACK, SYM_COLON // NEW
 };
 
+// ²Ù×÷·û
 char csym[NSYM + 1] = {
-	' ', '+', '-', '*', '/', '(', ')', '=', ',', '.', ';'
+	' ', '+', '-', '*', '/', '(', ')', '=', ',', '.', ';', '[', ']', ':'
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -92,7 +99,7 @@ void getsym(void) {
 			getch();
 		}
 		else {
-			sym = SYM_NULL;       // illegal?
+			sym = SYM_COLON;       // : in for
 		}
 	}
 	else if (ch == '>') {

@@ -3,10 +3,10 @@
 
 #include <stdio.h>
 
-#define NRW        11     // number of reserved words
+#define NRW        16     // number of reserved words
 #define TXMAX      500    // length of identifier table
 #define MAXNUMLEN  14     // maximum number of digits in numbers
-#define NSYM       10     // maximum number of symbols in array ssym and csym
+#define NSYM       13     // maximum number of symbols in array ssym and csym
 #define MAXIDLEN   10     // length of identifiers
 
 #define MAXADDRESS 32767  // maximum address
@@ -49,7 +49,15 @@ enum symtype {
 	SYM_CALL,
 	SYM_CONST,
 	SYM_VAR,
-	SYM_PROCEDURE
+	SYM_PROCEDURE,
+	SYM_FOR,
+	SYM_PRINT,
+	SYM_ELSE,
+	SYM_SETJMP,
+	SYM_LONGJMP,
+	SYM_LBRACK,
+	SYM_RBRACK,
+	SYM_COLON
 };
 
 enum idtype {
