@@ -529,7 +529,62 @@ void expression(symset fsys) {
 
 	set = unite_set(fsys, create_set(SYM_PLUS, SYM_MINUS, SYM_NULL));
 
+	if (sym == SYM_IDENTIFIER) { // variable assignment
+		int i;
+		if (!(i = position(id))) {
+			error(11); // Undeclared identifier.
+		}
+		else if (table[i].kind == ID_VARIABLE) {
+			getsym();
+			mask* mk = (mask*)&table[i];
+			if (sym == SYM_BECOMES) {
+				getsym();
+				expression(fsys);
+				if (i) {
+					gen(LIFT, 0, 0);
+					gen(STO, level - mk->level, mk->address);
+				}
+				goto END_EXPRESSION;
+			}
+			else {
+				gen(LOD, level - mk->level, mk->address);
+				goto NOT_BECOME_EXPRESSION;
+			}
+		}
+		else if (table[i].kind == ID_ARRAY) {
+			getsym();
+			mask* mk = (mask*)&table[i];
+			if (sym == SYM_LBRACK) {
+				gen(LIT, 0, 0);
+				dim_position(fsys, i, 0);
+				gen(LEA, level - mk->level, mk->address);
+				gen(OPR, 0, OPR_ADD);
+
+				if (sym == SYM_BECOMES) {
+					getsym();
+					expression(fsys);
+					if (i) {
+						gen(STOA, 0, 0);
+						gen(LIFT, 0, -2); // 把刚刚弹出栈的其中一个值放回到栈顶
+					}
+					goto END_EXPRESSION;
+				}
+				else {
+					gen(LODA, 0, 0);
+					goto NOT_BECOME_EXPRESSION;
+				}
+			}
+			else error(26); // NEW ERROR
+		}
+		else {
+			error(12); // Illegal assignment.
+			i = 0;
+		}
+	}
+	// 114
+
 	term(set);
+NOT_BECOME_EXPRESSION:
 	while (sym == SYM_PLUS || sym == SYM_MINUS) {
 		addop = sym;
 		getsym();
@@ -542,6 +597,7 @@ void expression(symset fsys) {
 		}
 	} // while
 
+END_EXPRESSION:
 	destroy_set(set);
 } // expression
 

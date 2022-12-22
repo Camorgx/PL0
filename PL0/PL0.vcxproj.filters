@@ -82,5 +82,8 @@
     <Text Include="if-else.txt">
       <Filter>资源文件</Filter>
     </Text>
+    <Text Include="bec-exp.txt">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>
