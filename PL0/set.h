@@ -19,16 +19,16 @@ extern symset facbegsys;
 extern symset relset;
 
 // 基于一系列整型变量建立一个优先链表，元素从小到大排列
-symset createset(int data, .../* SYM_NULL */);
+symset create_set(int data, .../* SYM_NULL */);
 
 // 销毁一个链表
-void destroyset(symset s);
+void destroy_set(symset s);
 
 // 合并两个优先链表，元素从小到大排列
-symset uniteset(symset s1, symset s2);
+symset unite_set(symset s1, symset s2);
 
 // 检查链表中有无给定元素
-int inset(int elem, symset s);
+int in_set(int elem, symset s);
 
 #endif
 // EOF set.h

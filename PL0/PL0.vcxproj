@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="array.txt" />
+    <Text Include="loop.txt" />
     <Text Include="print.txt" />
     <Text Include="example2.txt" />
     <Text Include="example3.txt" />

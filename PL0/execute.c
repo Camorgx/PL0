@@ -133,6 +133,10 @@ void interpret(void) {
 					pc = i.a;
 				top--;
 				break;
+			case LIFT:
+				stack[top + 1] = stack[top - i.a];
+				++top;
+				break;
 		} // switch
 	} while (pc);
 

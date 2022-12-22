@@ -82,5 +82,8 @@
     <Text Include="array.txt">
       <Filter>资源文件</Filter>
     </Text>
+    <Text Include="loop.txt">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -1,0 +1,16 @@
+var x, y, z;
+begin
+	x := 0;
+	for (var i : (1, 10)) begin
+		x := x + i;
+	end;
+	y := 0;
+	for (var i : (1, 10, 2)) begin
+		y := y + i;
+	end;
+	z := 0;
+	for (var i : (10, 1, -1)) begin
+		z := z + i;
+	end;
+	print(x, y, z);
+end.

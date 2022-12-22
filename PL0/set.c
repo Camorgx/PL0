@@ -12,7 +12,7 @@ symset facbegsys;
 
 symset relset;
 
-symset uniteset(symset s1, symset s2) {
+symset unite_set(symset s1, symset s2) {
 	symset s;
 	snode* p;
 
@@ -51,7 +51,7 @@ symset uniteset(symset s1, symset s2) {
 	p->next = NULL;
 
 	return s;
-} // uniteset
+} // unite_set
 
 void setinsert(symset s, int elem) {
 	snode* p = s;
@@ -67,7 +67,7 @@ void setinsert(symset s, int elem) {
 	p->next = q;
 } // setinsert
 
-symset createset(int elem, .../* SYM_NULL */) {
+symset create_set(int elem, .../* SYM_NULL */) {
 	va_list list;
 	symset s;
 
@@ -81,9 +81,9 @@ symset createset(int elem, .../* SYM_NULL */) {
 	}
 	va_end(list);
 	return s;
-} // createset
+} // create_set
 
-void destroyset(symset s) {
+void destroy_set(symset s) {
 	snode* p;
 
 	while (s) {
@@ -92,9 +92,9 @@ void destroyset(symset s) {
 		s = s->next;
 		free(p);
 	}
-} // destroyset
+} // destroy_set
 
-int inset(int elem, symset s) {
+int in_set(int elem, symset s) {
 	s = s->next;
 	while (s && s->elem < elem)
 		s = s->next;
@@ -103,6 +103,6 @@ int inset(int elem, symset s) {
 		return 1;
 	else
 		return 0;
-} // inset
+} // in_set
 
 // EOF set.c

@@ -44,12 +44,12 @@ char* err_msg[] = {
 void test(symset s1, symset s2, int n) {
 	symset s;
 
-	if (!inset(sym, s1)) {
+	if (!in_set(sym, s1)) {
 		error(n);
-		s = uniteset(s1, s2);
-		while (!inset(sym, s))
+		s = unite_set(s1, s2);
+		while (!in_set(sym, s))
 			getsym();
-		destroyset(s);
+		destroy_set(s);
 	}
 } // test
 
