@@ -73,16 +73,13 @@
     <Text Include="example3.txt">
       <Filter>资源文件</Filter>
     </Text>
-    <Text Include="test.txt">
-      <Filter>资源文件</Filter>
-    </Text>
-    <Text Include="test1.txt">
-      <Filter>资源文件</Filter>
-    </Text>
     <Text Include="array.txt">
       <Filter>资源文件</Filter>
     </Text>
     <Text Include="loop.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="if-else.txt">
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>

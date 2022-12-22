@@ -304,7 +304,17 @@ void statement(symset fsys) {
 		cx1 = cx;
 		gen(JPC, 0, 0);
 		statement(fsys);
-		code[cx1].a = cx;
+		int cx3 = cx;
+		gen(JMP, 0, 0);
+		getsym();
+		if (sym == SYM_ELSE) {
+			cx2 = cx;
+			getsym();
+			statement(fsys);
+		}
+		else cx2 = cx;
+		code[cx1].a = cx2;
+		code[cx3].a = cx;
 	}
 	else if (sym == SYM_BEGIN) { // block
 		getsym();
