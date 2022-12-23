@@ -153,7 +153,7 @@ void constdeclaration(void) {
 
 void dim_declaration(int dimension) {
 	if (dimension > MAX_ARRAY_DIM) {
-		error(26); // NEW ERROR
+		error(27); // Array dimension exceeded.
 	}
 	getsym();
 	if (sym == SYM_IDENTIFIER) {
@@ -167,21 +167,21 @@ void dim_declaration(int dimension) {
 					table[tx].dimension[dimension] = table[i].value;
 					break;
 				case ID_VARIABLE:
-					error(26); // NEW ERROR
+					error(28); // Lengthes of array must be constant.
 					break;
 				case ID_PROCEDURE:
-					error(26); // NEW ERROR
+					error(28); // Lengthes of array must be constant.
 					break;
 			} // switch
 		}
 	}
 	else if (sym == SYM_NUMBER) {
-		if (num >= MAX_ARRAY_DIM_LEN) error(26); // NEW ERROR
+		if (num >= MAX_ARRAY_DIM_LEN) error(29); // The maximum length of each dimension of the array exceeded.
 		else {
 			table[tx].dimension[dimension] = num;
 		}
 	}
-	else error(26); // NEW ERROR
+	else error(28); // Lengthes of array must be constant.
 
 	getsym();
 	if (sym == SYM_RBRACK) {
@@ -195,7 +195,7 @@ void dim_declaration(int dimension) {
 				array_size *= table[tx].dimension[i];
 			dx += array_size;
 		}
-		else error(26); // NEW ERROR
+		else error(30); // The symbol can not follow an array declaration.
 	}
 }
 
@@ -210,7 +210,7 @@ void vardeclaration(void) {
 			enter(ID_ARRAY);
 			dim_declaration(0);
 		}
-		else error(26); // NEW ERROR
+		else error(5); // Missing ',' or ';'.
 	}
 	else {
 		error(4); // There must be an identifier to follow 'const', 'var', or 'procedure'.
@@ -261,7 +261,7 @@ void statement(symset fsys) {
 					gen(STOA, 0, 0);
 				}
 			}
-			else error(26); // NEW ERROR
+			else error(31); // You cannot assign an array directly.
 		}
 		else {
 			error(12); // Illegal assignment.
@@ -399,19 +399,19 @@ void statement(symset fsys) {
 									gen(LIT, 0, 1);
 								}
 							}
-							else error(26); // NEW ERROR
+							else error(36); // Missing ','.
 							if (sym != SYM_RPAREN)
-								error(26); // NEW ERROR
+								error(22); // Missing ')'.
 						}
-						else error(26); // NEW ERROR
+						else error(33); // Missing '('.
 					}
-					else error(26); // NEW ERROR
+					else error(34); // Missing ':'.
 				}
-				else error(26); // NEW ERROR
+				else error(4); // There must be an identifier to follow 'const', 'var', or 'procedure'.
 			}
-			else error(26); // NEW ERROR
+			else error(35); // Missing 'var'.
 			getsym();
-			if (sym != SYM_RPAREN) error(26); // NEW ERROR
+			if (sym != SYM_RPAREN) error(22); // Missing ')'.
 			/*
 				if step < 0 // id >= high exec
 					tmp = (id >= high);
@@ -446,7 +446,7 @@ void statement(symset fsys) {
 			gen(INT, 0, -2); // ´ÓÕ»¶¥µ¯³ö high ºÍ step
 			--tx;
 		}
-		else error(26); // NEW ERROR
+		else error(33); // Missing '('.
 	}
 	else if (sym == SYM_PRINT) {
 		getsym();
@@ -468,11 +468,11 @@ void statement(symset fsys) {
 				destroy_set(set1);
 				destroy_set(set);
 				if (sym == SYM_RPAREN) gen(PRT, 255, 0);
-				else error(26); // NEW ERROR
+				else error(22); // Missing ')'.
 			}
 			getsym();
 		}
-		else error(26); // NEW ERROR
+		else error(33); // Missing '('.
 	}
 	else if (sym == SYM_LONGJMP) {
 		getsym();
@@ -487,9 +487,9 @@ void statement(symset fsys) {
 			destroy_set(set);
 			gen(JBG, 0, 0);
 			if (sym == SYM_RPAREN) getsym();
-			else error(26); // NEW ERROR
+			else error(22); // Missing ')'.
 		}
-		else error(26); // NEW ERROR
+		else error(33); // Missing '('.
 	}
 	TEST: test(fsys, phi, 19);
 } // statement
@@ -593,7 +593,7 @@ void expression(symset fsys) {
 					goto NOT_BECOME_EXPRESSION;
 				}
 			}
-			else error(26); // NEW ERROR
+			else error(37); // You cannot access an array directly.
 		}
 		else {
 			error(12); // Illegal assignment.
@@ -656,7 +656,7 @@ void term(symset fsys) {
 
 void dim_position(symset fsys, int i, int dimension) {
 	if (table[i].dimension[dimension] == 0)
-		error(26); // NEW ERROR
+		error(27); // Array dimension exceeded.
 	getsym();
 	symset set = unite_set(fsys, create_set(SYM_RBRACK, SYM_NULL));
 	expression(set);
@@ -709,7 +709,7 @@ void factor(symset fsys) {
 							gen(OPR, 0, OPR_ADD);
 							gen(LODA, 0, 0);
 						}
-						else error(26); // NEW ERROR
+						else error(37); // You cannot access an array directly.
 						break;
 					case ID_PROCEDURE:
 						error(21); // Procedure identifier can not be in an expression.
@@ -755,9 +755,9 @@ void factor(symset fsys) {
 				gen(JBS, 0, 0);
 				gen(LIT, 0, 0);
 				if (sym == SYM_RPAREN) getsym();
-				else error(26); // NEW ERROR
+				else error(22); // Missing ')'.
 			}
-			else error(26); // NEW ERROR
+			else error(33); // Missing '('
 		}
 		test(fsys, create_set(SYM_LPAREN, SYM_NULL), 23);
 	} // if

@@ -31,12 +31,17 @@ char* err_msg[] = {
 	/* 24 */    "The symbol can not be as the beginning of an expression.",
 	/* 25 */    "The number is too great.",
 	/* 26 */    "NEW ERROR",
-	/* 27 */    "",
-	/* 28 */    "",
-	/* 29 */    "",
-	/* 30 */    "",
-	/* 31 */    "",
-	/* 32 */    "There are too many levels."
+	/* 27 */    "Array dimension exceeded.",
+	/* 28 */    "Lengthes of array must be constant.",
+	/* 29 */    "The maximum length of each dimension of the array exceeded.",
+	/* 30 */    "The symbol can not follow an array declaration.",
+	/* 31 */    "You cannot assign an array directly.",
+	/* 32 */    "There are too many levels.",
+	/* 33 */	"Missing '('.",
+	/* 34 */	"Missing ':'.",
+	/* 35 */	"Missing 'var'.",
+	/* 36 */	"Missing ','.",
+	/* 37 */    "You cannot access an array directly.",
 };
 
 //////////////////////////////////////////////////////////////////////
