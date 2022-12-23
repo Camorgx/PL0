@@ -1,9 +1,12 @@
-var a, b[3], c, d, e;
+var a, b[3], c, d, e, f, g;
 begin
-	b[1] := 1;
-	a := b[2] := b[0] := 2 + b[1];
+	b[1] := 4;
+	a := b[2] := b[0] := b[1] / 2;
 	print(a, b[0], b[2]);
 
 	e := (c := 1) + (d := 2);
 	print(c, d, e);
+	
+	f := g := 1 + 2 * 3;
+	print(f, g);
 end.

@@ -526,6 +526,8 @@ void condition(symset fsys) {
 void expression(symset fsys) {
 	int addop;
 	symset set;
+	symset set3 = unite_set(fsys, create_set(SYM_PLUS, SYM_MINUS, SYM_TIMES, 
+		SYM_SLASH, SYM_NULL));
 
 	set = unite_set(fsys, create_set(SYM_PLUS, SYM_MINUS, SYM_NULL));
 
@@ -581,10 +583,22 @@ void expression(symset fsys) {
 			i = 0;
 		}
 	}
-	// 114
 
-	term(set);
+	int mulop;
+	factor(set3);
 NOT_BECOME_EXPRESSION:
+	while (sym == SYM_TIMES || sym == SYM_SLASH) {
+		mulop = sym;
+		getsym();
+		factor(set3);
+		if (mulop == SYM_TIMES) {
+			gen(OPR, 0, OPR_MUL);
+		}
+		else {
+			gen(OPR, 0, OPR_DIV);
+		}
+	} // while
+
 	while (sym == SYM_PLUS || sym == SYM_MINUS) {
 		addop = sym;
 		getsym();
@@ -599,6 +613,7 @@ NOT_BECOME_EXPRESSION:
 
 END_EXPRESSION:
 	destroy_set(set);
+	destroy_set(set3);
 } // expression
 
 //////////////////////////////////////////////////////////////////////
