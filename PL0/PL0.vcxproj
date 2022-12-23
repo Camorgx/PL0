@@ -40,11 +40,10 @@
   <ItemGroup>
     <Text Include="array.txt" />
     <Text Include="bec-exp.txt" />
+    <Text Include="demo.txt" />
     <Text Include="if-else.txt" />
     <Text Include="loop.txt" />
     <Text Include="print.txt" />
-    <Text Include="example2.txt" />
-    <Text Include="example3.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

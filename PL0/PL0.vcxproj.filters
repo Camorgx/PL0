@@ -67,12 +67,6 @@
     <Text Include="print.txt">
       <Filter>资源文件</Filter>
     </Text>
-    <Text Include="example2.txt">
-      <Filter>资源文件</Filter>
-    </Text>
-    <Text Include="example3.txt">
-      <Filter>资源文件</Filter>
-    </Text>
     <Text Include="array.txt">
       <Filter>资源文件</Filter>
     </Text>
@@ -83,6 +77,9 @@
       <Filter>资源文件</Filter>
     </Text>
     <Text Include="bec-exp.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="demo.txt">
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>

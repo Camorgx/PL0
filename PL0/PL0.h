@@ -17,7 +17,7 @@
 
 #define STACKSIZE  1000   // maximum storage
 
-#define MAXINS   13 // 最大指令数
+#define MAXINS   15 // 最大指令数
 
 #define MAX_ARRAY_DIM_LEN 32 // 数组每一维的最大长度
 #define MAX_ARRAY_DIM 8 // 数组的最大维数
@@ -84,6 +84,8 @@ enum opcode {
 	LEA, // 向栈中压入变量的绝对地址
 	STOA, // 间接写
 	LIFT, // 将 stack[top - i.a] 压入栈
+	JBG, // 从 jmp_buf 中恢复现场，假定栈顶保存返回值，stack[top - 1] 保存 idx
+	JBS, // jmp_buf[stack[top - 1]] = stack[top]，弹栈
 };
 
 enum oprcode {

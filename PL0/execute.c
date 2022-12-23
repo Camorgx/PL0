@@ -11,11 +11,14 @@ int base(int stack[], int currentLevel, int levelDiff) {
 	return b;
 } // base
 
+#define JMPMAX 4096
+
 //////////////////////////////////////////////////////////////////////
 // interprets and executes codes.
 void interpret(void) {
 	int pc;        // program counter
 	int stack[STACKSIZE];
+	int jmp_buf[JMPMAX];
 	int top;       // top of stack
 	int b;         // program, base, and top-stack register
 	instruction i; // instruction register
@@ -136,6 +139,19 @@ void interpret(void) {
 			case LIFT:
 				stack[top + 1] = stack[top - i.a];
 				++top;
+				break;
+			case JBG:
+				int tmp = top;
+				top = jmp_buf[stack[tmp - 1] + 1];
+				b = jmp_buf[stack[tmp - 1] + 2];
+				pc = jmp_buf[stack[tmp - 1]];
+				stack[++top] = stack[tmp];
+				break;
+			case JBS:
+				jmp_buf[stack[top - 1]] = stack[top];
+				jmp_buf[stack[top - 1] + 1] = top - 2;
+				jmp_buf[stack[top - 1] + 2] = b;
+				top -= 2;
 				break;
 		} // switch
 	} while (pc);

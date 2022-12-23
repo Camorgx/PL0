@@ -26,8 +26,10 @@ int main(void) {
 
 	// create begin symbol sets
 	declbegsys = create_set(SYM_CONST, SYM_VAR, SYM_PROCEDURE, SYM_NULL);
-	statbegsys = create_set(SYM_BEGIN, SYM_CALL, SYM_IF, SYM_WHILE, SYM_NULL);
-	facbegsys = create_set(SYM_IDENTIFIER, SYM_NUMBER, SYM_LPAREN, SYM_MINUS, SYM_NULL);
+	statbegsys = create_set(SYM_BEGIN, SYM_CALL, SYM_IF, SYM_WHILE, 
+		SYM_LONGJMP, SYM_NULL);
+	facbegsys = create_set(SYM_IDENTIFIER, SYM_NUMBER, SYM_LPAREN, 
+		SYM_MINUS, SYM_SETJMP, SYM_NULL);
 
 	err = cc = cx = ll = 0; // initialize global variables
 	ch = ' ';

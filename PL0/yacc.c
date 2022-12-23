@@ -8,7 +8,7 @@
 
 char* mnemonic[MAXINS] = {
 	"LIT", "OPR", "LOD", "STO", "CAL", "INT", "JMP", "JPC", 
-	"PRT", "LODA", "LEA", "STOA", "LIFT"
+	"PRT", "LODA", "LEA", "STOA", "LIFT", "JBG", "JBS"
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -474,6 +474,23 @@ void statement(symset fsys) {
 		}
 		else error(26); // NEW ERROR
 	}
+	else if (sym == SYM_LONGJMP) {
+		getsym();
+		if (sym == SYM_LPAREN) {
+			getsym();
+			set = unite_set(create_set(SYM_COMMA, SYM_NULL), fsys);
+			expression(set);
+			destroy_set(set);
+			getsym();
+			set = unite_set(create_set(SYM_RPAREN, SYM_NULL), fsys);
+			expression(set);
+			destroy_set(set);
+			gen(JBG, 0, 0);
+			if (sym == SYM_RPAREN) getsym();
+			else error(26); // NEW ERROR
+		}
+		else error(26); // NEW ERROR
+	}
 	TEST: test(fsys, phi, 19);
 } // statement
 
@@ -726,6 +743,21 @@ void factor(symset fsys) {
 			getsym();
 			factor(fsys);
 			gen(OPR, 0, OPR_NEG);
+		}
+		else if (sym == SYM_SETJMP) {
+			getsym();
+			if (sym == SYM_LPAREN) {
+				getsym();
+				set = unite_set(fsys, create_set(SYM_RPAREN, SYM_NULL));
+				expression(set);
+				destroy_set(set);
+				gen(LIT, 0, cx + 3);
+				gen(JBS, 0, 0);
+				gen(LIT, 0, 0);
+				if (sym == SYM_RPAREN) getsym();
+				else error(26); // NEW ERROR
+			}
+			else error(26); // NEW ERROR
 		}
 		test(fsys, create_set(SYM_LPAREN, SYM_NULL), 23);
 	} // if
