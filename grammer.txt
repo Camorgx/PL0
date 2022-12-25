@@ -49,7 +49,7 @@ statement:
     'if' condition 'then' statement |
     'if' condition 'then' statement 'else' statement | // 新增，else 语句
     'while' condition 'do' statement |
-    'print' '(' expression { , expression } ')' | // 新增，print 语句
+    'print' '(' [ expression { , expression } ] ')' | // 新增，print 语句
     'for' '(' 'var' *identifier* ':' '(' expression ',' 
         expression [ ',' expression ] ')' ')' statement | // 新增，for 语句
     'longjmp' '(' expression ',' expression ')' | // 新增，longjmp 语句
