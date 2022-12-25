@@ -1,0 +1,59 @@
+*A* 表示终结符 A。
+'A' 表示字符串字面量 A。
+{ A } 表示 A 可出现任意次（包含零次）。
+[ A ] 表示 A 可出现零次或一次。
+
+const-definition:
+    *identifier* '=' *number*
+
+const-declaration:
+    'const' const-definition { ',' const-definition } ';'
+
+var-definition:
+    *identifier* |
+    *identifier* '[' *number* ']' // 新增，数组的声明
+
+var-declaration:    
+    'var' var-definition { ',' var-definition } ';' 
+
+procedure-declaration:
+    'procedure' *identifier*  ';' block ';'
+
+factor:
+    *identifier* |
+    *identifier* '[' expression ']' | // 新增，数组成员访问 
+    *number* |
+    '(' expression ')' |
+    'setjmp' '(' expression ')' // 新增，setjmp 函数
+
+term:
+    factor { '*' factor | '/' factor }
+
+expression:
+    *identifier* ':=' expression | // 新增，赋值表达式
+    *identifier* '[' expression ']' ':=' expression | // 新增，数组成员赋值表达式
+    term { '+' term | '-' term } 
+
+relative-operator:
+    '=' | '<>' | '<' | '>' | '<=' | '>='
+
+condition:
+    'odd' expression |
+    expression relative-operator expression
+
+statement:
+    *identifier* ':=' expression |
+    *identifier* '[' expression ']' := expression | // 新增，数组成员的赋值
+    'call' *identifier* |
+    'begin' statement { ';' statement } 'end' |
+    'if' condition 'then' statement |
+    'if' condition 'then' statement 'else' statement | // 新增，else 语句
+    'while' condition 'do' statement |
+    'print' '(' expression { , expression } ')' | // 新增，print 语句
+    'for' '(' 'var' *identifier* ':' '(' expression ',' 
+        expression [ ',' expression ] ')' ')' statement | // 新增，for 语句
+    'longjmp' '(' expression ',' expression ')' | // 新增，longjmp 语句
+    ε
+
+block:
+    [ const-declaration ] [ var-declaration ] { procedure-declaration } statement
