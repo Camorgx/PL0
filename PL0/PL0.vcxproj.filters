@@ -82,5 +82,11 @@
     <Text Include="demo.txt">
       <Filter>资源文件</Filter>
     </Text>
+    <Text Include="same_iden.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="var_for.txt">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>

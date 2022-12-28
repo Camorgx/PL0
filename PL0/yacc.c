@@ -3,13 +3,9 @@
 #include "PL0.h"
 #include "table.h"
 #include "yacc.h"
+#include "execute.h"
 
 #include <stdlib.h>
-
-char* mnemonic[MAXINS] = {
-	"LIT", "OPR", "LOD", "STO", "CAL", "INT", "JMP", "JPC", 
-	"PRT", "LODA", "LEA", "STOA", "LIFT", "JBG", "JBS"
-};
 
 //////////////////////////////////////////////////////////////////////
 int dx;  // data allocation index
@@ -774,14 +770,3 @@ void gen(int x, int y, int z) {
 	code[cx].l = y;
 	code[cx++].a = z;
 } // gen
-
-//////////////////////////////////////////////////////////////////////
-void listcode(int from, int to) {
-	int i;
-
-	printf("\n");
-	for (i = from; i < to; i++) {
-		printf("%5d %s\t%d\t%d\n", i, mnemonic[code[i].f], code[i].l, code[i].a);
-	}
-	printf("\n");
-} // listcode

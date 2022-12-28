@@ -1,0 +1,10 @@
+var x, y, z;
+begin
+	x := 2;
+	y := 10;
+	z := 1;
+	for (var i : (1, x + y, y - 4 * x)) begin
+		z := z + 1;
+	end;
+	print(z);
+end.

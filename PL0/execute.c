@@ -158,3 +158,19 @@ void interpret(void) {
 
 	printf("End executing PL/0 program.\n");
 } // interpret
+
+char* mnemonic[MAXINS] = {
+	"LIT", "OPR", "LOD", "STO", "CAL", "INT", "JMP", "JPC",
+	"PRT", "LODA", "LEA", "STOA", "LIFT", "JBG", "JBS"
+};
+
+//////////////////////////////////////////////////////////////////////
+void listcode(int from, int to) {
+	int i;
+
+	printf("\n");
+	for (i = from; i < to; i++) {
+		printf("%5d %s\t%d\t%d\n", i, mnemonic[code[i].f], code[i].l, code[i].a);
+	}
+	printf("\n");
+} // listcode

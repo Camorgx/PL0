@@ -27,6 +27,7 @@
     <ClCompile Include="set.c" />
     <ClCompile Include="table.c" />
     <ClCompile Include="yacc.c" />
+    <Text Include="var_for.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="error.h" />
@@ -44,6 +45,7 @@
     <Text Include="if-else.txt" />
     <Text Include="loop.txt" />
     <Text Include="print.txt" />
+    <Text Include="same_iden.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
